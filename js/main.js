@@ -1,3 +1,4 @@
+import {createProduct} from './initialization'
 //đổi giá trị tiền
 function vnd(price) {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -82,9 +83,9 @@ function closeModal() {
 }
 
 //show list ra các sản phẩm(producst)
-function renderProducts(showProducst) {
+function renderProducts(products) { //truyền products đã khai báo ở trên vào
     let productHtml = '';
-    if (showProducst.length == 0) {
+    if (products.length === 0) {
         document.getElementById("home-products").style.display = "none";
         productHtml = `<div class="no-result">
                             <div class="no-result-h">Tìm kiếm không có kết quả</div>
@@ -95,26 +96,26 @@ function renderProducts(showProducst) {
                         </div>`;
     }else{
         document.getElementById("home-products").style.display = "block";
-        showProducst.forEach((products) => {
+        products.forEach((product) => {
             productHtml += `<div class="col-product">
                                 <article class="card-product" >
                                     <div class="card-header">
-                                        <a href="#" class="card-image-link" onclick="detailProduct(${products.id})">
-                                        <img class="card-image" src="${products.img}" alt="${products.title}">
+                                        <a href="#" class="card-image-link" onclick="detailProduct(${product.id})">
+                                        <img class="card-image" src="${product.img}" alt="${product.title}">
                                         </a>
                                     </div>
                                     <div class="food-info">
                                         <div class="card-content">
                                             <div class="card-title">
-                                                <a href="#" class="card-title-link" onclick="detailProduct(${products.id})">${products.title}</a>
+                                                <a href="#" class="card-title-link" onclick="detailProduct(${product.id})">${product.title}</a>
                                             </div>
                                         </div>
                                         <div class="card-footer">
                                             <div class="product-price">
-                                                <span class="current-price">${vnd(products.price)}</span>
+                                                <span class="current-price">${vnd(product.price)}</span>
                                             </div>
                                         <div class="product-buy">
-                                            <button onclick="detailProduct(${products.id})" class="card-button order-item"><i class="fa-regular fa-cart-shopping-fast"></i> Đặt món</button>
+                                            <button onclick="detailProduct(${product.id})" class="card-button order-item"><i class="fa-regular fa-cart-shopping-fast"></i> Đặt món</button>
                                         </div> 
                                     </div>
                                     </div>
@@ -124,3 +125,11 @@ function renderProducts(showProducst) {
     }
     document.getElementById('home-products').innerHTML = productHtml;
 }
+
+const detailProduct = id => {
+    console.log(id);
+}
+
+//Gọi hàm in ra màn hình
+renderProducts(products);
+window.onload = createProduct();
